@@ -1,23 +1,23 @@
 import React from "react"
 import Button from "../Button"
-import Toast from "../Toast/Toast"
 import styles from "./ToastPlayground.module.css"
+import ToastShelf from "../ToastShelf/ToastShelf"
+import { ToastContext } from "../ToastProvider/ToastProvider"
 
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"]
 
 function ToastPlayground() {
   const [message, setMessage] = React.useState("")
-  const [popToast, toggleToast] = React.useState(false)
-  const [selectedVariant, setSelectedVariant] = React.useState("notice")
+  const {createToast} = React.useContext(ToastContext)
+  const [selectedVariant, setSelectedVariant] = React.useState(VARIANT_OPTIONS[0])
 
   function handleSubmit(event){
     event.preventDefault()
-    toggleToast(true)
-  }
 
-  function dismissToast() {
-    toggleToast(false)
-    setMessage("")
+    createToast(message, selectedVariant);
+
+    setMessage('');
+    setSelectedVariant(VARIANT_OPTIONS[0])
   }
 
   return (
@@ -83,15 +83,7 @@ function ToastPlayground() {
         </div>
       </form>
 
-      {popToast && (
-        <Toast
-          variant={selectedVariant}
-          popToast={popToast}
-          dismissToast={dismissToast}
-        >
-          {message}
-        </Toast>
-      )}
+      <ToastShelf />
     </div>
   )
 }
