@@ -7,10 +7,8 @@ import {
   X,
 } from "react-feather"
 
-import VisuallyHidden from "../VisuallyHidden"
-
 import styles from "./Toast.module.css"
-import useEscapeKey from "../useEscapeKey/useEscapeKey"
+import VisuallyHidden from "../VisuallyHidden"
 import { ToastContext } from "../ToastProvider/ToastProvider"
 
 const ICONS_BY_VARIANT = {
@@ -21,9 +19,7 @@ const ICONS_BY_VARIANT = {
 }
 
 function Toast({ id, children, variant }) {
-
   const { dismissToast } = React.useContext(ToastContext)
-  useEscapeKey(dismissToast)
 
   const Icon = ICONS_BY_VARIANT[variant]
   return (
